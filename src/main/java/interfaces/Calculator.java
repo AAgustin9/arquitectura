@@ -1,5 +1,4 @@
-package main.java.interfaces;
-
+package interfaces;
 public interface Calculator {
     String sum(String a, String b);
     String sub(String a, String b);
