@@ -1,6 +1,6 @@
 package implement;
 
-import main.java.interfaces.Calculator;
+import interfaces.Calculator;
 
 public class CalculatorImp implements Calculator {
 
