@@ -1,8 +1,8 @@
-package implement;
+package implementations;
 
 import interfaces.Calculator;
 
-public class CalculatorImp implements Calculator {
+public class CalculatorImpl implements Calculator {
 
     private String order(String a, String b) {
         // make both strings the same length
@@ -20,31 +20,31 @@ public class CalculatorImp implements Calculator {
         if (a.length() > b.length()) b = order(b, a);
 
         String carry = "0";
-        String result = "";
+        StringBuilder result = new StringBuilder();
 
         for (int i = a.length() - 1; i >= 0; i--) {
             if ((a.charAt(i) > b.charAt(i) || a.charAt(i) < b.charAt(i)) && carry.equals("0")) {
-                result += "1";
+                result.append("1");
             } else if ((a.charAt(i) == b.charAt(i) && a.charAt(i) == '1') && carry.equals("0")) {
-                result += "0";
+                result.append("0");
                 carry = "1";
             } else if ((a.charAt(i) == b.charAt(i) && a.charAt(i) == '0') && carry.equals("0")) {
-                result += "0";
+                result.append("0");
             } else if ((a.charAt(i) > b.charAt(i) || a.charAt(i) < b.charAt(i)) && carry.equals("1")) {
-                result += "0";
+                result.append("0");
                 carry = "1";
             } else if ((a.charAt(i) == b.charAt(i) && a.charAt(i) == '1') && carry.equals("1")) {
-                result += "1";
+                result.append("1");
                 carry = "1";
             } else if ((a.charAt(i) == b.charAt(i) && a.charAt(i) == '0') && carry.equals("1")) {
-                result += "1";
+                result.append("1");
                 carry = "0";
             }
 
         }
-        if (carry == "1") return "1" + new StringBuilder(result).reverse().toString();
+        if (carry == "1") return "1" + new StringBuilder(result.toString()).reverse();
 
-        return new StringBuilder(result).reverse().toString();
+        return new StringBuilder(result.toString()).reverse().toString();
     }
 
     @Override
@@ -53,11 +53,10 @@ public class CalculatorImp implements Calculator {
         if (a.length() < b.length()) a = order(a, b);
         if (a.length() > b.length()) b = order(b, a);
 
-        // resta de dos numeros binarios usando el complemento a 1
         String complement = sum(complement(b), "1");
         if (complement.length() != a.length()) complement = complement.substring(1);
         String result = sum(a, complement);
-        if(result.length() != a.length()) return result.substring(1);
+        if (result.length() != a.length()) return result.substring(1);
         else return result;
     }
 
@@ -82,12 +81,12 @@ public class CalculatorImp implements Calculator {
     }
 
     private String complement(String a) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < a.length(); i++) {
             if (a.charAt(i) == '0') {
-                result += "1";
-            } else result += "0";
+                result.append("1");
+            } else result.append("0");
         }
-        return result;
+        return result.toString();
     }
 }
