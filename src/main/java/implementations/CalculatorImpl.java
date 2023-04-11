@@ -10,18 +10,19 @@ public class CalculatorImpl implements Calculator {
 
     private String order(String a, String b) {
         // make both strings the same length
-        String add = "";
-        for (int i = 0; i < Math.abs(b.length() - a.length()); i++) {
-            add += "0";
-        }
+        StringBuilder add = new StringBuilder();
+        add.append("0".repeat(Math.abs(b.length() - a.length())));
         return add + a;
     }
 
     @Override
     public String sum(String a, String b) {
-
         if (a.length() < b.length()) a = order(a, b);
         if (a.length() > b.length()) b = order(b, a);
+
+        for (int i = 0; i < a.length(); i++) {
+            if ((a.charAt(i) != '0' && a.charAt(i) != '1') || (b.charAt(i) != '0' && b.charAt(i) != '1')) throw new IllegalArgumentException("Only binary numbers are supported");
+        }
 
         String carry = "0";
         StringBuilder result = new StringBuilder();
@@ -57,6 +58,10 @@ public class CalculatorImpl implements Calculator {
         if (a.length() < b.length()) a = order(a, b);
         if (a.length() > b.length()) b = order(b, a);
 
+        for (int i = 0; i < a.length()-1; i++) {
+            if ((a.charAt(i) != '0' && a.charAt(i) != '1') || (b.charAt(i) != '0' && b.charAt(i) != '1')) throw new IllegalArgumentException("Only binary numbers are supported");
+        }
+
         String complement = sum(complement(b), "1");
         if (complement.length() != a.length()) complement = complement.substring(1);
         String result = sum(a, complement);
@@ -75,52 +80,47 @@ public class CalculatorImpl implements Calculator {
     }
 
     HashMap<String, String> binMap = new HashMap<>() {{
-            put("0000", "0");
-            put("0001", "1");
-            put("0010", "2");
-            put("0011", "3");
-            put("0100", "4");
-            put("0101", "5");
-            put("0110", "6");
-            put("0111", "7");
-            put("1000", "8");
-            put("1001", "9");
-            put("1010", "A");
-            put("1011", "B");
-            put("1100", "C");
-            put("1101", "D");
-            put("1110", "E");
-            put("1111", "F");
-        }};
+        put("0000", "0");
+        put("0001", "1");
+        put("0010", "2");
+        put("0011", "3");
+        put("0100", "4");
+        put("0101", "5");
+        put("0110", "6");
+        put("0111", "7");
+        put("1000", "8");
+        put("1001", "9");
+        put("1010", "A");
+        put("1011", "B");
+        put("1100", "C");
+        put("1101", "D");
+        put("1110", "E");
+        put("1111", "F");
+    }};
 
     @Override
     public String toHex(String binary) {
-        String hexa = "";
-        String ceros = "";
+        StringBuilder hexa = new StringBuilder();
+        StringBuilder ceros = new StringBuilder();
         List<String> separateList = new ArrayList<>();
         String orderedBinary = "";
         //Checks that the number can be separated in 4's.
-        if (binary.length() % 4 !=0){
+        if (binary.length() % 4 != 0) {
             int adders = 4 - binary.length() % 4; //finds the missing 0's.
-            for (int i = 0; i < adders; i++) {
-                ceros += "0";
-            }
+            ceros.append("0".repeat(adders));
             orderedBinary = ceros + binary;
-        } else { orderedBinary = binary;}
-        for (int i = 0; i < orderedBinary.length(); i+=4) {
-            separateList.add(orderedBinary.substring(i, i+4));
+        } else {
+            orderedBinary = binary;
+        }
+        for (int i = 0; i < orderedBinary.length(); i += 4) {
+            separateList.add(orderedBinary.substring(i, i + 4));
         }
 
-        for (String slice: separateList) {
-
-            for (String key : binMap.keySet()) {
-                if (key.equals(slice)) {
-                    hexa += binMap.get(slice);
-                }
-            }
+        for (String slice : separateList) {
+            if (binMap.containsKey(slice)) hexa.append(binMap.get(slice));
         }
 
-        return hexa;
+        return hexa.toString();
     }
 
     HashMap<Character, String> hexMap = new HashMap<>() {{
@@ -144,13 +144,13 @@ public class CalculatorImpl implements Calculator {
 
     @Override
     public String fromHex(String hex) {
-        String bin = "";
+        StringBuilder bin = new StringBuilder();
         for (int i = 0; i < hex.length(); i++) {
-            if (hexMap.containsKey(hex.charAt(i))){
-                bin += hexMap.get(hex.charAt(i));
+            if (hexMap.containsKey(hex.charAt(i))) {
+                bin.append(hexMap.get(hex.charAt(i)));
             }
         }
-        return bin;
+        return bin.toString();
     }
 
     private String complement(String a) {

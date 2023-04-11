@@ -1,11 +1,11 @@
-import implementations.AsciiImpl;
+import implementations.AsciiEncoderImpl;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AsciiEncoderTest {
 
-    AsciiImpl myASCIIEncoder = new AsciiImpl();
+    AsciiEncoderImpl myASCIIEncoder = new AsciiEncoderImpl();
     String stringTest = "1000001";
     String stringTest2 = "11000011100010";
     String stringTest3 = "11010001100101110110011011001101111";
