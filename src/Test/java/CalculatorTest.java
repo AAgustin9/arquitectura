@@ -14,7 +14,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testSumDifferentLenght() {
+    public void testSumDifferentLength() {
         Calculator calculator = new CalculatorImpl();
         String result = calculator.sum("1100", "101");
         assertEquals("10001", result);
@@ -32,5 +32,24 @@ public class CalculatorTest {
         Calculator calculator = new CalculatorImpl();
         String result = calculator.sub("11111111", "010110010");
         assertEquals("001001101", result);
+    }
+
+    @Test
+    public void testToHexDifferentLength(){
+        Calculator calculator = new CalculatorImpl();
+        String result = calculator.toHex("0111001001");
+        assertEquals("1C9",result);
+    }
+    @Test
+    public void testToHexNormal(){
+        Calculator calculator = new CalculatorImpl();
+        String result = calculator.toHex("000111001001");
+        assertEquals("1C9", result);
+    }
+    @Test
+    public void testFromHexNormal(){
+        Calculator calculator = new CalculatorImpl();
+        String result = calculator.fromHex("1C9");
+        assertEquals("000111001001",result);
     }
 }
