@@ -44,7 +44,7 @@ public class CalculatorTest {
     public void testToHexNormal(){
         Calculator calculator = new CalculatorImpl();
         String result = calculator.toHex("000111001001");
-        assertEquals("1C9",result);
+        assertEquals("1C9", result);
     }
     @Test
     public void testFromHexNormal(){

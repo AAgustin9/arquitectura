@@ -5,7 +5,6 @@ import interfaces.Calculator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CalculatorImpl implements Calculator {
 
@@ -107,7 +106,7 @@ public class CalculatorImpl implements Calculator {
                 ceros += "0";
             }
             orderedBinary = ceros + binary;
-        }
+        } else { orderedBinary = binary;}
         for (int i = 0; i < orderedBinary.length(); i+=4) {
             separateList.add(orderedBinary.substring(i, i+4));
         }
